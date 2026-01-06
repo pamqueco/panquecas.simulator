@@ -10,6 +10,7 @@ h1 {
 
 body {
   text-align: center;
+  font-size: 80px;
 }
 
 .inputInicial {
@@ -23,4 +24,5 @@ label {
 
 button {
   padding: 10px;
+
 }
