@@ -1,29 +1,56 @@
-// BLOQUEIO BÁSICO
+// 🔒 Proteção
 if (sessionStorage.getItem("admin") !== "true") {
   location.href = "index.html";
 }
 
-const input = document.getElementById("valor");
-const botao = document.getElementById("aplicar");
+const usuarioInput = document.getElementById("usuarioAlvo");
+const qtdInput = document.getElementById("novaQtd");
+const botao = document.getElementById("alterar");
 const msg = document.getElementById("msg");
+const historicoDiv = document.getElementById("historico");
 
+// 🛠 Alterar usuário específico
 botao.onclick = () => {
-  const valor = Number(input.value);
+  const nome = usuarioInput.value.trim();
+  const novaQtd = Number(qtdInput.value);
 
-  if (!valor && valor !== 0) {
-    msg.textContent = "Valor inválido";
+  if (!nome || isNaN(novaQtd)) {
+    msg.textContent = "Dados inválidos";
     return;
   }
 
-  db.ref("usuarios").once("value").then(snap => {
-    const usuarios = snap.val();
+  const refUser = db.ref("usuarios/" + nome);
 
-    for (let nome in usuarios) {
-      db.ref("usuarios/" + nome).update({
-        panquecas: valor
-      });
+  refUser.once("value").then(snap => {
+    if (!snap.exists()) {
+      msg.textContent = "Usuário não encontrado";
+      return;
     }
 
-    msg.textContent = "Panquecas atualizadas para todos 🥞";
+    const antes = snap.val().panquecas || 0;
+
+    refUser.update({ panquecas: novaQtd });
+
+    // 📜 Salva no histórico
+    db.ref("historico").push({
+      admin: "adm",
+      usuario: nome,
+      antes: antes,
+      depois: novaQtd,
+      data: new Date().toLocaleString()
+    });
+
+    msg.textContent = `Panquecas de ${nome} atualizadas! 🥞`;
   });
 };
+
+// 📜 Carregar histórico
+db.ref("historico").limitToLast(20).on("value", snap => {
+  historicoDiv.innerHTML = "";
+
+  snap.forEach(item => {
+    const h = item.val();
+    historicoDiv.innerHTML +=
+      `${h.data} — ${h.admin} alterou ${h.usuario}: ${h.antes} → ${h.depois}<br>`;
+  });
+});
