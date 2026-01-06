@@ -32,7 +32,8 @@ botao.onclick = () => {
     (loginInserido === "Nico" && senhaInserida === "NãoBiancaVcNVaiEntrar") ||
     (loginInserido === "Poseidon" && senhaInserida === "Dondom9") ||
     (loginInserido === "Penélope" && senhaInserida === "ppdaat123") ||
-    (loginInserido === "Afrodite" && senhaInserida === "Fogonabianca")
+    (loginInserido === "Afrodite" && senhaInserida === "Fogonabianca") ||
+    (loginInserido === "Selene" && senhaInserida === "qualqueruma")
   ) {
     db.ref("usuarios/" + loginInserido).get().then(snap => {
       if (!snap.exists()) {
@@ -53,6 +54,7 @@ botao.onclick = () => {
   // 3️⃣ ERRO
   resultado.textContent = "Login ou senha incorretos";
 };
+
 
 
 
