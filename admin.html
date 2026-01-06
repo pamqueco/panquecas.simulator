@@ -6,16 +6,20 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <h1>⚙️ Painel do Admin</h1>
 
-<p>
-  Panquecas para TODOS:
-  <input id="valor" type="number" placeholder="Ex: 500">
-</p>
+<h3>Editar usuário específico</h3>
 
-<button id="aplicar">Aplicar</button>
+<input id="usuarioAlvo" placeholder="Nome do usuário">
+<input id="novaQtd" type="number" placeholder="Panquecas">
+<button id="alterar">Alterar</button>
+
 <p id="msg"></p>
+
+<hr>
+
+<h3>📜 Histórico de alterações</h3>
+<div id="historico"></div>
 
 <button onclick="location.href='index.html'">Sair</button>
 
