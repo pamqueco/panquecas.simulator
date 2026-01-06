@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+h1 {
+  display: inline-flex;
+  font-family: "Poppins";
+  padding: 3px 10px;
+  background-color: #9fc7ff;
+  border-radius: 10px;
+}
+
+body {
+  text-align: center;
+}
+
+.inputInicial {
+  padding: 10px;
+}
+
+label {
+  display: inline-block;
+  padding: 5px;
+}
+
+button {
+  padding: 10px;
+}

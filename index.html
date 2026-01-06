@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+  <title>Login 🥞</title>
+  </head>
+  <body> 
+    <h1 id="aberturazona">Login</h1> <br>
+
+    <label for="login">Insira seu personagem aqui.</label> <br>
+    <input id="login" class="inputInicial" type="text" placeholder="Ex: Polites"/> <br>
+    <label for="senha">Insira sua senha aqui.</label> <br>
+    <input id="senha" class="inputInicial" type="text" placeholder="Ex: Abc123"/> <br> <br>
+    <button id="entrar" type="button">Entrar</button>
+    <p id=resultado></p>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwpAOnOj1yEb-rJraMeLh9OLP663_OlAc",
+    authDomain: "panquecas-simulator.firebaseapp.com",
+    databaseURL: "https://panquecas-simulator-default-rtdb.firebaseio.com",
+    projectId: "panquecas-simulator",
+    storageBucket: "panquecas-simulator.firebasestorage.app",
+    messagingSenderId: "968538676702",
+    appId: "1:968538676702:web:2f2ac75f87a9efa38e114f"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
+
+  <script src="script.js"></script>
+  </body>
+</html>

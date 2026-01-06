@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>🏆 Ranking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h2>🏆 Ranking</h2>
+
+  <div id="ranking"></div>
+
+  <a href="principal.html">⬅ Voltar</a>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwpAOnOj1yEb-rJraMeLh9OLP663_OlAc",
+    authDomain: "panquecas-simulator.firebaseapp.com",
+    databaseURL: "https://panquecas-simulator-default-rtdb.firebaseio.com",
+    projectId: "panquecas-simulator",
+    storageBucket: "panquecas-simulator.firebasestorage.app",
+    messagingSenderId: "968538676702",
+    appId: "1:968538676702:web:2f2ac75f87a9efa38e114f"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
+
+  <script src="ranking.js"></script>
+</body>
+</html>
