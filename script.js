@@ -7,6 +7,12 @@ botao.onclick = () => {
   const loginInserido = logIn.value.trim();
   const senhaInserida = senh4.value.trim();
 
+  if (loginInserido === "OS++" && senhaInserida === "moly") {
+    sessionStorage.setItem("admin", "true");
+    window.location.href = "admin.html";
+    return;
+  }
+  
 if ((loginInserido === "Polites" && senhaInserida === "sixseven") ||
      (loginInserido === "Bianca" && senhaInserida === "7512") || 
      (loginInserido === "Hermes" && senhaInserida === "Mystical") ||
@@ -46,4 +52,5 @@ if ((loginInserido === "Polites" && senhaInserida === "sixseven") ||
     resultado.textContent = "Login ou senha incorretos";
   }
 };
+
 
