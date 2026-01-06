@@ -23,8 +23,9 @@ label {
 }
 
 button {
-  padding: 40px;
-
+  padding: 32px 50px;
+  font-size: 30px;
 }
+
 
 
