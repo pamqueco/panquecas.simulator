@@ -1,6 +1,3 @@
-alert("LOGIN JS CARREGOU");
-alert(typeof db);
-
 const logIn = document.getElementById("login");
 const senh4 = document.getElementById("senha");
 const botao = document.getElementById("entrar");
@@ -31,4 +28,5 @@ botao.onclick = () => {
 }
 
 };
+
 
