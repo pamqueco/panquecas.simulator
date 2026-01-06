@@ -7,10 +7,21 @@ botao.onclick = () => {
   const loginInserido = logIn.value.trim();
   const senhaInserida = senh4.value.trim();
 
-  if (
-    (loginInserido === "Polites" && senhaInserida === "1234") ||
-    (loginInserido === "Bianca" && senhaInserida === "7512")
-  ) {
+if ((loginInserido === "Polites" && senhaInserida === "sixseven") ||
+     (loginInserido === "Bianca" && senhaInserida === "7512") || 
+     (loginInserido === "Hermes" && senhaInserida === "Mystical") ||
+     (loginInserido === "Medusa" && senhaInserida === "Cacetinho alemães") ||
+     (loginInserido === "Aeolus" && senhaInserida === "12345sixseven89") ||
+     (loginInserido === "Ártemis" && senhaInserida === "senhaforte") ||
+     (loginInserido === "Ganimedes" && senhaInserida === "gaynimedes++") ||
+     (loginInserido === "Leo" && senhaInserida === "leovaldezreidelas123") ||
+     (loginInserido === "Tiresias" && senhaInserida === "bobão2346") ||
+     (loginInserido === "Thalia" && senhaInserida === "910787") ||
+     (loginInserido === "Clarisse" && senhaInserida === "123cu123") ||
+     (loginInserido === "Dionísio" && senhaInserida === "03032011") ||
+     (loginInserido === "Hécate" && senhaInserida === "Magia") ||
+     (loginInserido === "Nico" && senhaInserida === "NãoBiancaVcNVaiEntrar")
+   ) {
     db.ref("usuarios/" + loginInserido)
       .get()
       .then(snap => {
@@ -35,3 +46,4 @@ botao.onclick = () => {
     resultado.textContent = "Login ou senha incorretos";
   }
 };
+
