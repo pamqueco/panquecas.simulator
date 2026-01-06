@@ -8,7 +8,7 @@ botao.onclick = () => {
   const senhaInserida = senh4.value.trim();
 
   // 1️⃣ ADMIN
-  if (loginInserido === "OS++" && senhaInserida === "moly") {
+  if (loginInserido === "OS--" && senhaInserida === "hamiltao") {
     sessionStorage.setItem("admin", "true");
     window.location.href = "admin.html";
     return;
@@ -52,6 +52,7 @@ botao.onclick = () => {
   // 3️⃣ ERRO
   resultado.textContent = "Login ou senha incorretos";
 };
+
 
 
 
