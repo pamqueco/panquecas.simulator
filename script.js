@@ -33,7 +33,8 @@ botao.onclick = () => {
     (loginInserido === "Poseidon" && senhaInserida === "Dondom9") ||
     (loginInserido === "Penélope" && senhaInserida === "ppdaat123") ||
     (loginInserido === "Afrodite" && senhaInserida === "Fogonabianca") ||
-    (loginInserido === "Selene" && senhaInserida === "qualqueruma")
+    (loginInserido === "Selene" && senhaInserida === "qualqueruma") ||
+    (loginInserido === "Luke" && senhaInserida === "AmoKronos")
   ) {
     db.ref("usuarios/" + loginInserido).get().then(snap => {
       if (!snap.exists()) {
