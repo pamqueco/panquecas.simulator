@@ -1,18 +1,8 @@
 // =====================
-// SEGURANÇA DE ACESSO
+// SEGURANÇA
 // =====================
 const usuario = sessionStorage.getItem("usuario");
-
-if (!usuario) {
-  window.location.href = "index.html";
-}
-
-db.ref("usuarios/" + usuario).once("value").then(snap => {
-  if (!snap.exists()) {
-    sessionStorage.clear();
-    window.location.href = "index.html";
-  }
-});
+if (!usuario) window.location.href = "index.html";
 
 // =====================
 // ELEMENTOS
@@ -22,42 +12,71 @@ const imgVencedor = document.getElementById("imgVencedor");
 const msgVencedor = document.getElementById("msgVencedor");
 const msg = document.getElementById("msg");
 const timerEl = document.getElementById("timer");
+const infoAposta = document.getElementById("infoAposta");
 
 let cavaloEscolhido = null;
 let proximaCorrida = 0;
 let intervaloTimer = null;
+let corridaDisparada = false;
 
 // =====================
-// CONFIGURAÇÃO DA CORRIDA
+// CONFIG
 // =====================
-const DURACAO = 5 * 60 * 1000; // 5 minutos
+const DURACAO = 5 * 60 * 1000;
 
+// =====================
+// INIT
+// =====================
 db.ref("corrida").once("value").then(snap => {
   if (!snap.exists()) iniciarNovaCorrida();
 });
 
+db.ref("apostas/" + usuario).on("value", snap => {
+  if (snap.exists()) {
+    const a = snap.val();
+    infoAposta.textContent = `🐎 Cavalo ${a.cavalo} | 🥞 ${a.valor}`;
+    cavaloEscolhido = a.cavalo;
+  } else {
+    infoAposta.textContent = "";
+    cavaloEscolhido = null;
+  }
+});
+
+// =====================
+// CORRIDA
+// =====================
 function iniciarNovaCorrida() {
+  corridaDisparada = false;
+
   db.ref("corrida").set({
     status: "aberta",
-    proxima: Date.now() + DURACAO
+    proxima: Date.now() + DURACAO,
+    resultado: null
   });
+
+  imgCorrida.src = "img/baia.jpg";
+  imgVencedor.style.display = "none";
+  msgVencedor.textContent = "";
+  msg.textContent = "";
 }
 
 // =====================
-// SELEÇÃO / APOSTA
+// APOSTA
 // =====================
 function selecionarCavalo(n) {
+  if (cavaloEscolhido) {
+    msg.textContent = "Você já apostou";
+    return;
+  }
   cavaloEscolhido = n;
   msg.textContent = `Cavalo ${n} selecionado`;
 }
 
 function apostar() {
-  const valor = Number(document.getElementById("valorAposta").value);
+  if (!cavaloEscolhido) return;
 
-  if (!cavaloEscolhido || valor <= 0) {
-    msg.textContent = "Escolha um cavalo e um valor válido";
-    return;
-  }
+  const valor = Number(document.getElementById("valorAposta").value);
+  if (valor <= 0) return;
 
   db.ref("usuarios/" + usuario + "/panquecas").once("value").then(snap => {
     if (snap.val() < valor) {
@@ -70,11 +89,25 @@ function apostar() {
 
     db.ref("apostas/" + usuario).set({
       cavalo: cavaloEscolhido,
-      valor: valor,
+      valor,
       pago: false
     });
 
-    msg.textContent = "Aposta realizada!";
+    msg.textContent = "Aposta confirmada!";
+  });
+}
+
+function cancelarAposta() {
+  db.ref("apostas/" + usuario).once("value").then(snap => {
+    if (!snap.exists()) return;
+
+    const a = snap.val();
+
+    db.ref("usuarios/" + usuario + "/panquecas")
+      .transaction(p => p + a.valor);
+
+    db.ref("apostas/" + usuario).remove();
+    msg.textContent = "Aposta cancelada";
   });
 }
 
@@ -88,116 +121,103 @@ db.ref("corrida").on("value", snap => {
   proximaCorrida = c.proxima;
 
   if (!intervaloTimer) {
-    intervaloTimer = setInterval(() => {
-      atualizarTimer(proximaCorrida);
-    }, 1000);
+    intervaloTimer = setInterval(() => atualizarTimer(), 1000);
   }
 
-  if (c.status === "aberta") {
-    imgCorrida.src = "img/baia.jpg";
-    msgVencedor.textContent = "";
-    imgVencedor.style.display = "none";
-  }
-
-  if (c.status === "finalizada") {
+  if (c.status === "finalizada" && c.resultado) {
     mostrarResultado(c);
   }
 });
 
 // =====================
-// TIMER (TEMPO REAL)
+// TIMER
 // =====================
-function atualizarTimer(proxima) {
-  const restante = proxima - Date.now();
+function atualizarTimer() {
+  const r = proximaCorrida - Date.now();
 
-  if (restante <= 0) {
-    timerEl.textContent = "🏁 Corrida em andamento!";
+  if (r <= 0 && !corridaDisparada) {
+    corridaDisparada = true;
     dispararCorrida();
+    timerEl.textContent = "🏁 Corrida em andamento!";
     return;
   }
 
-  const m = Math.floor(restante / 60000);
-  const s = Math.floor((restante % 60000) / 1000);
-  timerEl.textContent = `⏱️ Próxima corrida em ${m}m ${s}s`;
+  if (r > 0) {
+    const m = Math.floor(r / 60000);
+    const s = Math.floor((r % 60000) / 1000);
+    timerEl.textContent = `⏱️ ${m}m ${s}s`;
+  }
 }
 
 // =====================
-// DISPARO AUTOMÁTICO
+// DISPARO
 // =====================
 function dispararCorrida() {
-  db.ref("corrida/status").transaction(st => {
-    if (st === "finalizada") return;
-    return "finalizada";
-  }).then(() => {
-    const ordem = embaralhar([1,2,3,4,5,6,7,8]);
+  const ordem = embaralhar([1,2,3,4,5,6,7,8]);
 
-    db.ref("corrida").update({
-      resultado: {
-        primeiro: ordem[0],
-        segundo: ordem[1],
-        terceiro: ordem[2]
-      }
-    });
-
-    pagarApostas({
-      resultado: {
-        primeiro: ordem[0],
-        segundo: ordem[1],
-        terceiro: ordem[2]
-      }
-    });
-
-    setTimeout(iniciarNovaCorrida, 10000);
+  db.ref("corrida").update({
+    status: "finalizada",
+    resultado: {
+      primeiro: ordem[0],
+      segundo: ordem[1],
+      terceiro: ordem[2]
+    }
   });
+
+  pagarApostas(ordem[0]);
+
+  setTimeout(iniciarNovaCorrida, 10000);
 }
 
-function embaralhar(arr) {
-  return arr.sort(() => Math.random() - 0.5);
+function embaralhar(a) {
+  return a.sort(() => Math.random() - 0.5);
 }
 
 // =====================
-// RESULTADO (IMAGEM FIXA DO VENCEDOR)
+// RESULTADO / FEEDBACK
 // =====================
 function mostrarResultado(c) {
   const v = c.resultado.primeiro;
 
-  msgVencedor.textContent = "🏆 Último vencedor:";
-
   imgVencedor.src = `img/cavalo${v}.png`;
   imgVencedor.style.display = "block";
-  imgVencedor.style.height = "60px";
   imgVencedor.style.margin = "10px auto";
+
+  msgVencedor.textContent = `🏆 Vencedor: Cavalo ${v}`;
+
+  db.ref("apostas/" + usuario).once("value").then(snap => {
+    if (!snap.exists()) {
+      msg.textContent = "Você não apostou nessa corrida";
+      return;
+    }
+
+    const a = snap.val();
+    if (a.cavalo === v) {
+      msg.textContent = `🎉 Você ganhou ${a.valor * 3} panquecas!`;
+    } else {
+      msg.textContent = "❌ Você perdeu a aposta";
+    }
+  });
 }
 
 // =====================
 // PAGAMENTO
 // =====================
-function pagarApostas(corrida) {
-  db.ref("config/payout").once("value").then(cfgSnap => {
-    const cfg = cfgSnap.val() || {};
+function pagarApostas(vencedor) {
+  db.ref("apostas").once("value").then(snap => {
+    snap.forEach(u => {
+      const a = u.val();
+      if (a.pago) return;
 
-    const m1 = Number(cfg.primeiro) || 0;
-    const m2 = Number(cfg.segundo) || 0;
-    const m3 = Number(cfg.terceiro) || 0;
+      let ganho = 0;
+      if (a.cavalo === vencedor) ganho = a.valor * 3;
 
-    db.ref("apostas").once("value").then(apSnap => {
-      apSnap.forEach(u => {
-        const nome = u.key;
-        const a = u.val();
-        if (a.pago) return;
+      db.ref("apostas/" + u.key).update({ pago: true });
 
-        db.ref("apostas/" + nome).update({ pago: true });
-
-        let ganho = 0;
-        if (a.cavalo === corrida.resultado.primeiro) ganho = a.valor * m1;
-        if (a.cavalo === corrida.resultado.segundo) ganho = a.valor * m2;
-        if (a.cavalo === corrida.resultado.terceiro) ganho = a.valor * m3;
-
-        if (ganho > 0) {
-          db.ref("usuarios/" + nome + "/panquecas")
-            .transaction(p => (p || 0) + ganho);
-        }
-      });
+      if (ganho > 0) {
+        db.ref("usuarios/" + u.key + "/panquecas")
+          .transaction(p => (p || 0) + ganho);
+      }
     });
   });
 }
