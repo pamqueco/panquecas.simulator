@@ -161,7 +161,7 @@ function embaralhar(arr) {
 function mostrarResultado(c) {
   const v = c.resultado.primeiro;
 
-  msgVencedor.textContent = "🏆 Vencedor:";
+  msgVencedor.textContent = "🏆 Último vencedor:";
 
   imgVencedor.src = `img/cavalo${v}.png`;
   imgVencedor.style.display = "block";
