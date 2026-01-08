@@ -9,14 +9,12 @@ const timerEl = document.getElementById("timer");
 let cavaloEscolhido = null;
 
 // =====================
-// SETUP DA CORRIDA
+// CONFIGURAÇÃO
 // =====================
 const DURACAO = 5 * 60 * 1000; // 5 minutos
 
 db.ref("corrida").once("value").then(snap => {
-  if (!snap.exists()) {
-    iniciarNovaCorrida();
-  }
+  if (!snap.exists()) iniciarNovaCorrida();
 });
 
 function iniciarNovaCorrida() {
@@ -71,7 +69,7 @@ db.ref("corrida").on("value", snap => {
   atualizarTimer(c.proxima);
 
   if (c.status === "aberta") {
-    imgCorrida.src = "img/baia.png";
+    imgCorrida.src = "img/baia.jpg";
     imgVencedor.style.display = "none";
     msgVencedor.textContent = "";
   }
@@ -82,7 +80,7 @@ db.ref("corrida").on("value", snap => {
 });
 
 // =====================
-// CRONÔMETRO
+// TIMER
 // =====================
 function atualizarTimer(proxima) {
   const restante = proxima - Date.now();
@@ -99,11 +97,11 @@ function atualizarTimer(proxima) {
 }
 
 // =====================
-// DISPARO AUTOMÁTICO
+// DISPARO
 // =====================
 function dispararCorrida() {
-  db.ref("corrida/status").transaction(status => {
-    if (status === "finalizada") return;
+  db.ref("corrida/status").transaction(st => {
+    if (st === "finalizada") return;
     return "finalizada";
   }).then(() => {
     const ordem = embaralhar([1,2,3,4,5,6,7,8]);
@@ -133,12 +131,12 @@ function embaralhar(arr) {
 }
 
 // =====================
-// RESULTADO + PAGAMENTO
+// RESULTADO / PAGAMENTO
 // =====================
 function mostrarResultado(c) {
   const v = c.resultado.primeiro;
   msgVencedor.textContent = `🏆 Vencedor: Cavalo ${v}`;
-  imgVencedor.src = `img/cavalovitoria${v}.png`;
+  imgVencedor.src = `img/cavalovitoria${v}.jpg`;
   imgVencedor.style.display = "block";
 }
 
@@ -159,7 +157,6 @@ function pagarApostas(corrida) {
         db.ref("apostas/" + nome).update({ pago: true });
 
         let ganho = 0;
-
         if (a.cavalo === corrida.resultado.primeiro) ganho = a.valor * m1;
         if (a.cavalo === corrida.resultado.segundo) ganho = a.valor * m2;
         if (a.cavalo === corrida.resultado.terceiro) ganho = a.valor * m3;
