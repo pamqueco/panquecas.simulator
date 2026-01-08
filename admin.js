@@ -1,56 +1,63 @@
-// 🔒 Proteção
-if (sessionStorage.getItem("admin") !== "true") {
-  location.href = "index.html";
+// 🔐 segurança ADM
+const usuario = sessionStorage.getItem("usuario");
+if (usuario !== "adm") {
+  window.location.href = "index.html";
 }
 
-const usuarioInput = document.getElementById("usuarioAlvo");
-const qtdInput = document.getElementById("novaQtd");
-const botao = document.getElementById("alterar");
-const msg = document.getElementById("msg");
-const historicoDiv = document.getElementById("historico");
-
-// 🛠 Alterar usuário específico
-botao.onclick = () => {
-  const nome = usuarioInput.value.trim();
-  const novaQtd = Number(qtdInput.value);
-
-  if (!nome || isNaN(novaQtd)) {
-    msg.textContent = "Dados inválidos";
-    return;
-  }
-
-  const refUser = db.ref("usuarios/" + nome);
-
-  refUser.once("value").then(snap => {
-    if (!snap.exists()) {
-      msg.textContent = "Usuário não encontrado";
-      return;
-    }
-
-    const antes = snap.val().panquecas || 0;
-
-    refUser.update({ panquecas: novaQtd });
-
-    // 📜 Salva no histórico
-    db.ref("historico").push({
-      admin: "adm",
-      usuario: nome,
-      antes: antes,
-      depois: novaQtd,
-      data: new Date().toLocaleString()
-    });
-
-    msg.textContent = `Panquecas de ${nome} atualizadas! 🥞`;
+// =====================
+// MULTIPLICADORES
+// =====================
+function salvarMultiplicadores() {
+  db.ref("config/payout").set({
+    primeiro: Number(m1.value),
+    segundo: Number(m2.value),
+    terceiro: Number(m3.value)
   });
-};
+}
 
-// 📜 Carregar histórico
-db.ref("historico").limitToLast(20).on("value", snap => {
-  historicoDiv.innerHTML = "";
+// carregar valores
+db.ref("config/payout").once("value").then(s => {
+  const c = s.val() || {};
+  m1.value = c.primeiro || 3;
+  m2.value = c.segundo || 2;
+  m3.value = c.terceiro || 1.5;
+});
 
-  snap.forEach(item => {
-    const h = item.val();
-    historicoDiv.innerHTML +=
-      `${h.data} — ${h.admin} alterou ${h.usuario}: ${h.antes} → ${h.depois}<br>`;
+// =====================
+// CORRIDA
+// =====================
+db.ref("corrida").on("value", s => {
+  const c = s.val();
+  if (!c) return;
+  statusCorrida.textContent = `Status: ${c.status}`;
+});
+
+function forcarCorrida() {
+  db.ref("corrida/proxima").set(Date.now());
+}
+
+function reiniciarCorrida() {
+  db.ref("corrida").remove();
+}
+
+// =====================
+// USUÁRIOS
+// =====================
+const lista = document.getElementById("listaUsuarios");
+
+db.ref("usuarios").on("value", snap => {
+  lista.innerHTML = "";
+  snap.forEach(u => {
+    const opt = document.createElement("option");
+    opt.value = u.key;
+    opt.textContent = u.key;
+    lista.appendChild(opt);
   });
 });
+
+function alterarPanquecas() {
+  const nome = lista.value;
+  const valor = Number(novoValor.value);
+
+  db.ref("usuarios/" + nome + "/panquecas").set(valor);
+}
