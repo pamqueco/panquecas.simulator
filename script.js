@@ -24,7 +24,7 @@ botao.onclick = () => {
     (loginInserido === "Ártemis" && senhaInserida === "senhaforte") ||
     (loginInserido === "Ganimedes" && senhaInserida === "gaynimedes++") ||
     (loginInserido === "Leo" && senhaInserida === "leovaldezreidelas123") ||
-    (loginInserido === "Tiresias" && senhaInserida === "bobão2346") ||
+    (loginInserido === "Tiresias" && senhaInserida === "Pompompurinpanquecudo") ||
     (loginInserido === "Thalia" && senhaInserida === "910787") ||
     (loginInserido === "Clarisse" && senhaInserida === "123cu123") ||
     (loginInserido === "Dionísio" && senhaInserida === "03032011") ||
@@ -56,6 +56,7 @@ botao.onclick = () => {
   // 3️⃣ ERRO
   resultado.textContent = "Login ou senha incorretos";
 };
+
 
 
 
