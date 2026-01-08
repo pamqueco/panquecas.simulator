@@ -1,5 +1,23 @@
+// =====================
+// SEGURANÇA DE ACESSO
+// =====================
 const usuario = sessionStorage.getItem("usuario");
 
+if (!usuario) {
+  window.location.href = "index.html";
+}
+
+// verifica se o usuário existe no banco
+db.ref("usuarios/" + usuario).once("value").then(snap => {
+  if (!snap.exists()) {
+    sessionStorage.clear();
+    window.location.href = "index.html";
+  }
+});
+
+// =====================
+// ELEMENTOS
+// =====================
 const imgCorrida = document.getElementById("imagemCorrida");
 const imgVencedor = document.getElementById("imgVencedor");
 const msgVencedor = document.getElementById("msgVencedor");
@@ -9,7 +27,7 @@ const timerEl = document.getElementById("timer");
 let cavaloEscolhido = null;
 
 // =====================
-// CONFIGURAÇÃO
+// CONFIGURAÇÃO DA CORRIDA
 // =====================
 const DURACAO = 5 * 60 * 1000; // 5 minutos
 
@@ -69,7 +87,7 @@ db.ref("corrida").on("value", snap => {
   atualizarTimer(c.proxima);
 
   if (c.status === "aberta") {
-    imgCorrida.src = "img/baia.jpg";
+    imgCorrida.src = "img/baia.png";
     imgVencedor.style.display = "none";
     msgVencedor.textContent = "";
   }
@@ -97,7 +115,7 @@ function atualizarTimer(proxima) {
 }
 
 // =====================
-// DISPARO
+// DISPARO AUTOMÁTICO
 // =====================
 function dispararCorrida() {
   db.ref("corrida/status").transaction(st => {
@@ -136,7 +154,7 @@ function embaralhar(arr) {
 function mostrarResultado(c) {
   const v = c.resultado.primeiro;
   msgVencedor.textContent = `🏆 Vencedor: Cavalo ${v}`;
-  imgVencedor.src = `img/cavalovitoria${v}.jpg`;
+  imgVencedor.src = `img/cavalovitoria${v}.png`;
   imgVencedor.style.display = "block";
 }
 
