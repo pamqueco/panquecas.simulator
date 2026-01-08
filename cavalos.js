@@ -24,6 +24,8 @@ const msg = document.getElementById("msg");
 const timerEl = document.getElementById("timer");
 
 let cavaloEscolhido = null;
+let proximaCorrida = 0;
+let intervaloTimer = null;
 
 // =====================
 // CONFIGURAÇÃO DA CORRIDA
@@ -83,12 +85,18 @@ db.ref("corrida").on("value", snap => {
   const c = snap.val();
   if (!c) return;
 
-  atualizarTimer(c.proxima);
+  proximaCorrida = c.proxima;
+
+  if (!intervaloTimer) {
+    intervaloTimer = setInterval(() => {
+      atualizarTimer(proximaCorrida);
+    }, 1000);
+  }
 
   if (c.status === "aberta") {
-    imgCorrida.src = "img/baia.jpg";        // JPEG
-    imgVencedor.style.display = "none";
+    imgCorrida.src = "img/baia.jpg";
     msgVencedor.textContent = "";
+    imgVencedor.style.display = "none";
   }
 
   if (c.status === "finalizada") {
@@ -97,7 +105,7 @@ db.ref("corrida").on("value", snap => {
 });
 
 // =====================
-// TIMER
+// TIMER (TEMPO REAL)
 // =====================
 function atualizarTimer(proxima) {
   const restante = proxima - Date.now();
@@ -148,15 +156,22 @@ function embaralhar(arr) {
 }
 
 // =====================
-// RESULTADO / PAGAMENTO
+// RESULTADO (IMAGEM FIXA DO VENCEDOR)
 // =====================
 function mostrarResultado(c) {
   const v = c.resultado.primeiro;
-  msgVencedor.textContent = `🏆 Vencedor: Cavalo ${v}`;
-  imgVencedor.src = `img/cavalovitoria${v}.jpg`; // JPEG
+
+  msgVencedor.textContent = "🏆 Vencedor:";
+
+  imgVencedor.src = `img/cavalo${v}.png`;
   imgVencedor.style.display = "block";
+  imgVencedor.style.height = "60px";
+  imgVencedor.style.margin = "10px auto";
 }
 
+// =====================
+// PAGAMENTO
+// =====================
 function pagarApostas(corrida) {
   db.ref("config/payout").once("value").then(cfgSnap => {
     const cfg = cfgSnap.val() || {};
