@@ -7,7 +7,6 @@ if (!usuario) {
   window.location.href = "index.html";
 }
 
-// verifica se o usuário existe no banco
 db.ref("usuarios/" + usuario).once("value").then(snap => {
   if (!snap.exists()) {
     sessionStorage.clear();
@@ -87,7 +86,7 @@ db.ref("corrida").on("value", snap => {
   atualizarTimer(c.proxima);
 
   if (c.status === "aberta") {
-    imgCorrida.src = "img/baia.png";
+    imgCorrida.src = "img/baia.jpg";        // JPEG
     imgVencedor.style.display = "none";
     msgVencedor.textContent = "";
   }
@@ -154,7 +153,7 @@ function embaralhar(arr) {
 function mostrarResultado(c) {
   const v = c.resultado.primeiro;
   msgVencedor.textContent = `🏆 Vencedor: Cavalo ${v}`;
-  imgVencedor.src = `img/cavalovitoria${v}.png`;
+  imgVencedor.src = `img/cavalovitoria${v}.jpg`; // JPEG
   imgVencedor.style.display = "block";
 }
 
