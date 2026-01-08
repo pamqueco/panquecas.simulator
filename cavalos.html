@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>🏇 Corrida de Cavalos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>🏇 Corrida de Cavalos</h2>
+
+<p id="tempo">Carregando...</p>
+<p id="saldo">🥞 Panquecas: ...</p>
+
+<div id="baia">
+  <p>Escolha um cavalo:</p>
+  <div>
+    <button onclick="selecionarCavalo(1)">🐎 1</button>
+    <button onclick="selecionarCavalo(2)">🐎 2</button>
+    <button onclick="selecionarCavalo(3)">🐎 3</button>
+    <button onclick="selecionarCavalo(4)">🐎 4</button>
+    <button onclick="selecionarCavalo(5)">🐎 5</button>
+    <button onclick="selecionarCavalo(6)">🐎 6</button>
+    <button onclick="selecionarCavalo(7)">🐎 7</button>
+    <button onclick="selecionarCavalo(8)">🐎 8</button>
+  </div>
+</div>
+
+<p>Cavalo escolhido: <span id="cavaloEscolhido">nenhum</span></p>
+
+<p>Valor da aposta:</p>
+<input id="valor" type="number">
+
+<br><br>
+<button id="apostar">Apostar</button>
+
+<p id="msg"></p>
+
+<hr>
+
+<div id="resultado" style="display:none;">
+  <h3>🏆 Resultado</h3>
+  <p id="p1"></p>
+  <p id="p2"></p>
+  <p id="p3"></p>
+</div>
+
+<button onclick="location.href='principal.html'">⬅ Voltar</button>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwpAOnOj1yEb-rJraMeLh9OLP663_OlAc",
+    authDomain: "panquecas-simulator.firebaseapp.com",
+    databaseURL: "https://panquecas-simulator-default-rtdb.firebaseio.com",
+    projectId: "panquecas-simulator",
+    storageBucket: "panquecas-simulator.firebasestorage.app",
+    messagingSenderId: "968538676702",
+    appId: "1:968538676702:web:2f2ac75f87a9efa38e114f"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
+
+<script src="cavalos.js"></script>
+</body>
+</html>
