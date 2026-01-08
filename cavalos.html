@@ -2,50 +2,43 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>🏇 Corrida de Cavalos</title>
+  <title>🐎 Corrida de Cavalos</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>🏇 Corrida de Cavalos</h2>
+<h1>🐎 Corrida de Cavalos</h1>
 
-<p id="tempo">Carregando...</p>
-<p id="saldo">🥞 Panquecas: ...</p>
+<!-- imagem principal da corrida -->
+<img id="imagemCorrida" src="img/baia.png" width="320">
 
-<div id="baia">
-  <p>Escolha um cavalo:</p>
-  <div>
-    <button onclick="selecionarCavalo(1)">🐎 1</button>
-    <button onclick="selecionarCavalo(2)">🐎 2</button>
-    <button onclick="selecionarCavalo(3)">🐎 3</button>
-    <button onclick="selecionarCavalo(4)">🐎 4</button>
-    <button onclick="selecionarCavalo(5)">🐎 5</button>
-    <button onclick="selecionarCavalo(6)">🐎 6</button>
-    <button onclick="selecionarCavalo(7)">🐎 7</button>
-    <button onclick="selecionarCavalo(8)">🐎 8</button>
-  </div>
-</div>
-
-<p>Cavalo escolhido: <span id="cavaloEscolhido">nenhum</span></p>
-
-<p>Valor da aposta:</p>
-<input id="valor" type="number">
-
-<br><br>
-<button id="apostar">Apostar</button>
-
-<p id="msg"></p>
+<!-- mensagem do vencedor -->
+<p id="msgVencedor"></p>
+<img id="imgVencedor" width="220" style="display:none;">
 
 <hr>
 
-<div id="resultado" style="display:none;">
-  <h3>🏆 Resultado</h3>
-  <p id="p1"></p>
-  <p id="p2"></p>
-  <p id="p3"></p>
+<h3>Escolha seu cavalo:</h3>
+
+<div class="botoes-cavalos">
+  <button onclick="selecionarCavalo(1)"><img src="img/cavalo1.png" width="60"></button>
+  <button onclick="selecionarCavalo(2)"><img src="img/cavalo2.png" width="60"></button>
+  <button onclick="selecionarCavalo(3)"><img src="img/cavalo3.png" width="60"></button>
+  <button onclick="selecionarCavalo(4)"><img src="img/cavalo4.png" width="60"></button>
+  <button onclick="selecionarCavalo(5)"><img src="img/cavalo5.png" width="60"></button>
+  <button onclick="selecionarCavalo(6)"><img src="img/cavalo6.png" width="60"></button>
+  <button onclick="selecionarCavalo(7)"><img src="img/cavalo7.png" width="60"></button>
+  <button onclick="selecionarCavalo(8)"><img src="img/cavalo8.png" width="60"></button>
 </div>
 
-<button onclick="location.href='principal.html'">⬅ Voltar</button>
+<br>
+
+<label>Valor da aposta:</label><br>
+<input id="valorAposta" type="number" min="1"><br><br>
+
+<button onclick="apostar()">Apostar</button>
+
+<p id="msg"></p>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
