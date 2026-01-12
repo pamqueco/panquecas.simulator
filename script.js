@@ -9,7 +9,7 @@ botao.onclick = () => {
 
   // 1️⃣ ADMIN
   if (loginInserido === "OS--" && senhaInserida === "hamiltao") {
-    sessionStorage.setItem("admin", "true");
+    sessionStorage.setItem("usuario", "OS--");
     window.location.href = "admin.html";
     return;
   }
