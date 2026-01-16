@@ -8,17 +8,18 @@ botao.onclick = () => {
   const senhaInserida = senh4.value.trim();
 
   // 1️⃣ ADMIN
-  if (loginInserido === "OS--" && senhaInserida === "hamiltao") {
-    sessionStorage.setItem("usuario", "OS--");
-    window.location.href = "admin.html";
-    return;
-  }
+if (
+  (loginInserido === "Hermes" && senhaInserida === "Mystical") ||
+  (loginInserido === "Polites" && senhaInserida === "sixseven67")
+) {
+  sessionStorage.setItem("usuario", loginInserido);
+  window.location.href = "admin.html";
+  return;
+}
 
   // 2️⃣ USUÁRIOS NORMAIS (SUBSTITUÍDO)
   if (
-    (loginInserido === "Polites" && senhaInserida === "sixseven") ||
     (loginInserido === "Bianca" && senhaInserida === "7512") || 
-    (loginInserido === "Hermes" && senhaInserida === "Mystical") ||
     (loginInserido === "Medusa" && senhaInserida === "Cacetinho alemães") ||
     (loginInserido === "Aeolus" && senhaInserida === "12345sixseven89") ||
     (loginInserido === "Ártemis" && senhaInserida === "senhaforte") ||
@@ -57,6 +58,7 @@ botao.onclick = () => {
   // 3️⃣ ERRO
   resultado.textContent = "Login ou senha incorretos";
 };
+
 
 
 
