@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PQS</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="Adobe Express - file.png">
+</head>
+<body>
+
+  <h1>🥞 Panquecas Simulator</h1>
+  <h2>Setor de Adminstração 🔧</h2>
+  <p id="usuario"></p>
+
+
+  
+  <h3>Seção de interação:</h3>
+
+  <button onclick="ir('giros.html')">🎲 Giros</button>
+  <button onclick="ir('apostas.html')">🎰 Apostas</button>
+  <button onclick="ir('ranking.html')">🏆 Ranking</button>
+  <button onclick="ir('cavalos.html')">🏇 Corrida de Cavalos</button> <br>
+  <button onclick="location.href='index.html'">Sair</button>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwpAOnOj1yEb-rJraMeLh9OLP663_OlAc",
+    authDomain: "panquecas-simulator.firebaseapp.com",
+    databaseURL: "https://panquecas-simulator-default-rtdb.firebaseio.com",
+    projectId: "panquecas-simulator",
+    storageBucket: "panquecas-simulator.firebasestorage.app",
+    messagingSenderId: "968538676702",
+    appId: "1:968538676702:web:2f2ac75f87a9efa38e114f"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
+
+  <script src="princadm.js"></script>
+</body>
+</html>
