@@ -13,7 +13,7 @@ if (
   (loginInserido === "Polites" && senhaInserida === "sixseven67")
 ) {
   sessionStorage.setItem("usuario", loginInserido);
-  window.location.href = "admin.html";
+  window.location.href = "princadm.html";
   return;
 }
 
@@ -55,6 +55,7 @@ if (
   // 3️⃣ ERRO
   resultado.textContent = "Login ou senha incorretos";
 };
+
 
 
 
