@@ -20,7 +20,6 @@ if (
   // 2️⃣ USUÁRIOS NORMAIS (SUBSTITUÍDO)
   if (
     (loginInserido === "Bianca" && senhaInserida === "7512") || 
-    (loginInserido === "Medusa" && senhaInserida === "Cacetinho alemães") ||
     (loginInserido === "Aeolus" && senhaInserida === "12345sixseven89") ||
     (loginInserido === "Ártemis" && senhaInserida === "senhaforte") ||
     (loginInserido === "Ganimedes" && senhaInserida === "gaynimedes++") ||
@@ -31,8 +30,6 @@ if (
     (loginInserido === "Dionísio" && senhaInserida === "03032011") ||
     (loginInserido === "Hécate" && senhaInserida === "Magia") ||
     (loginInserido === "Nico" && senhaInserida === "NãoBiancaVcNVaiEntrar") ||
-    (loginInserido === "Poseidon" && senhaInserida === "Dondom9") ||
-    (loginInserido === "Penélope" && senhaInserida === "ppdaat123") ||
     (loginInserido === "Afrodite" && senhaInserida === "Fogonabianca") ||
     (loginInserido === "Selene" && senhaInserida === "qualqueruma") ||
     (loginInserido === "Luke" && senhaInserida === "AmoKronos") ||
@@ -58,6 +55,7 @@ if (
   // 3️⃣ ERRO
   resultado.textContent = "Login ou senha incorretos";
 };
+
 
 
 
