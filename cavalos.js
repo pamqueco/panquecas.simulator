@@ -15,6 +15,7 @@ const timerEl = document.getElementById("timer");
 const infoAposta = document.getElementById("infoAposta");
 
 let cavaloEscolhido = null;
+let cavaloApostado = null;
 let proximaCorrida = 0;
 let intervaloTimer = null;
 let corridaDisparada = false;
@@ -83,13 +84,13 @@ function selecionarCavalo(n) {
     return;
   }
 
-  cavaloEscolhido = n;
+  cavaloSelecionado = n;
   const cor = coresCavalos[n];
   msg.textContent = `Cavalo ${cor} selecionado`;
 }
 
 function apostar() {
-  if (!cavaloEscolhido) return;
+  if (!cavaloSelecionado) return;
 
   const valor = Number(document.getElementById("valorAposta").value);
   if (valor <= 0) return;
@@ -102,6 +103,8 @@ function apostar() {
 
     db.ref("usuarios/" + usuario + "/panquecas")
       .transaction(p => p - valor);
+
+    cavaloEscolhido = cavaloSelecionado; // 🔒 agora sim apostou
 
     db.ref("apostas/" + usuario).set({
       cavalo: cavaloEscolhido,
