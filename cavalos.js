@@ -60,6 +60,20 @@ function iniciarNovaCorrida() {
   msg.textContent = "";
 }
 
+// ====================
+// CORES
+// ====================
+const coresCavalos = {
+  1: "Marrom",
+  2: "Vermelho",
+  3: "Laranja",
+  4: "Amarelo",
+  5: "Verde",
+  6: "Azul",
+  7: "Roxo",
+  8: "Rosa"
+};
+
 // =====================
 // APOSTA
 // =====================
@@ -68,8 +82,10 @@ function selecionarCavalo(n) {
     msg.textContent = "Você já apostou";
     return;
   }
+
   cavaloEscolhido = n;
-  msg.textContent = `Cavalo ${n} selecionado`;
+  const cor = coresCavalos[n];
+  msg.textContent = `Cavalo ${cor} selecionado`;
 }
 
 function apostar() {
