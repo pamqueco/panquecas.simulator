@@ -7,10 +7,19 @@
 </head>
 <body>
 
-<h2>🥞 Usuários</h2>
-<select id="listaUsuarios"></select>
-<input id="novoValor" type="number" placeholder="Panquecas">
-<button onclick="alterarPanquecas()">Alterar</button>
+<h3>💰 Multiplicadores</h3>
+1º lugar: <input id="m1" type="number" step="0.1"><br>
+2º lugar: <input id="m2" type="number" step="0.1"><br>
+3º lugar: <input id="m3" type="number" step="0.1"><br>
+<button onclick="salvarMultiplicadores()">Salvar</button>
+
+<hr>
+
+<!-- CORRIDA -->
+<h3>🐎 Corrida</h3>
+<p id="statusCorrida"></p>
+<button onclick="forcarCorrida()">Forçar corrida agora</button>
+<button onclick="reiniciarCorrida()">Reiniciar corrida</button>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
