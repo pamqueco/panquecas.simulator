@@ -56,15 +56,11 @@ if (
   resultado.textContent = "Login ou senha incorretos";
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
+document.addEventListener("keydown", (e) => {
+  if (
+    e.key === "Enter" &&
+    (e.target.id === "login" || e.target.id === "senha")
+  ) {
+    document.getElementById("entrar").click();
+  }
+});
