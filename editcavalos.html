@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Edição de Panquecas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>🥞 Usuários</h2>
+<select id="listaUsuarios"></select>
+<input id="novoValor" type="number" placeholder="Panquecas">
+<button onclick="alterarPanquecas()">Alterar</button>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwpAOnOj1yEb-rJraMeLh9OLP663_OlAc",
+    authDomain: "panquecas-simulator.firebaseapp.com",
+    databaseURL: "https://panquecas-simulator-default-rtdb.firebaseio.com/",
+    projectId: "panquecas-simulator",
+    storageBucket: "panquecas-simulator.firebasestorage.app",
+    messagingSenderId: "968538676702",
+    appId: "1:968538676702:web:2f2ac75f87a9efa38e114f"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
+
+<script src="admin.js"></script>
+</body>
+</html>
