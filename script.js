@@ -10,7 +10,7 @@ botao.onclick = () => {
   // 1️⃣ ADMIN
 if (
   (loginInserido === "Hermes" && senhaInserida === "Mystical") ||
-  (loginInserido === "Polites" && senhaInserida === "sixseven67")
+  (loginInserido === "Polites" && senhaInserida === "3103")
 ) {
   sessionStorage.setItem("usuario", loginInserido);
   window.location.href = "princadm.html";
@@ -55,6 +55,7 @@ if (
   // 3️⃣ ERRO
   resultado.textContent = "Login ou senha incorretos";
 };
+
 
 
 
