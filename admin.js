@@ -1,6 +1,6 @@
 // 🔐 segurança ADM
 const usuario = sessionStorage.getItem("usuario");
-if (usuario !== "OS--") {
+if (usuario !== "Polites") {
   window.location.href = "index.html";
 }
 
