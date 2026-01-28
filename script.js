@@ -31,10 +31,12 @@ if (
     (loginInserido === "Hécate" && senhaInserida === "Magia") ||
     (loginInserido === "Nico" && senhaInserida === "NãoBiancaVcNVaiEntrar") ||
     (loginInserido === "Afrodite" && senhaInserida === "Fogonabianca") ||
-    (loginInserido === "Selene" && senhaInserida === "qualqueruma") ||
+    (loginInserido === "Circe" && senhaInserida === "qualqueruma") ||
     (loginInserido === "Luke" && senhaInserida === "AmoKronos") ||
     (loginInserido === "Ares" && senhaInserida === "12344321") ||
-    (loginInserido === "Apolo" && senhaInserida === "5236778")
+    (loginInserido === "Apolo" && senhaInserida === "5236778") ||
+    (loginInserido === "Patroclo" && senhaInserida === "Aquiles") ||
+    (loginInserido === "Aquiles" && senhaInserida === "Patroclo")
   ) {
     db.ref("usuarios/" + loginInserido).get().then(snap => {
       if (!snap.exists()) {
